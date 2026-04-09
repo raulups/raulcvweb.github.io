@@ -49,7 +49,9 @@
     }
 
     body {
-      background: var(--bg);
+      background-color: var(--bg);
+      background-image: radial-gradient(circle, #c8c8c0 1px, transparent 1px);
+      background-size: 28px 28px;
       color: var(--text-1);
       font-family: var(--font-sans);
       font-weight: 300;
@@ -261,24 +263,13 @@
        HERO
     ========================================================= */
     #hero {
-      min-height: 100vh;
+      min-height: 55vh;
       display: flex;
       align-items: center;
-      padding: 7rem 0 5rem;
+      padding: 8rem 0 4rem;
       position: relative;
     }
 
-    /* Subtle dot-grid background */
-    #hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image: radial-gradient(circle, var(--border) 1px, transparent 1px);
-      background-size: 28px 28px;
-      opacity: 0.8;
-      mask-image: radial-gradient(ellipse 80% 90% at 50% 0%, black 30%, transparent 100%);
-      -webkit-mask-image: radial-gradient(ellipse 80% 90% at 50% 0%, black 30%, transparent 100%);
-    }
 
     .hero-content {
       position: relative;
@@ -462,9 +453,35 @@
     /* =========================================================
        SECTIONS — SHARED
     ========================================================= */
-    section { padding: 7rem 0; }
+    /* All sections transparent — body dot grid shows through */
+    section { background: transparent; padding: 0; margin: 5rem 0; }
 
-    section:nth-child(even) { background: var(--bg-2); }
+    /* Shared card style — full-width elevated panel on the dot grid */
+    .page-card,
+    #about .container,
+    #experience .container,
+    #skills .container,
+    #education .container,
+    #contact .container {
+      background: rgba(255, 255, 255, 0.97);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      box-shadow:
+        0 -4px 20px rgba(0,0,0,0.04),
+        0 4px 20px rgba(0,0,0,0.04),
+        0 12px 48px rgba(0,0,0,0.06);
+      padding: 5rem clamp(2rem, 8vw, 7rem);
+      max-width: none;
+      margin: 0;
+      width: 100%;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Hero intro card (desc + actions + stats + pills) */
+    .page-card {
+      margin: 0;
+    }
 
     /* =========================================================
        ABOUT — 01
@@ -1082,7 +1099,15 @@
 
     @media (max-width: 480px) {
       .container { padding: 0 1.25rem; }
-      section { padding: 5rem 0; }
+      section { margin: 3rem 0; }
+      .page-card,
+      #about .container,
+      #experience .container,
+      #skills .container,
+      #education .container,
+      #contact .container {
+        padding: 3.5rem 1.5rem;
+      }
       .hero-name { font-size: 3rem; }
       .hero-actions { flex-direction: column; }
       .hero-actions .btn { text-align: center; justify-content: center; }
@@ -1113,11 +1138,14 @@
     }
 
     .hero-orb-1 {
-      width: 550px; height: 550px;
+      position: fixed;
+      width: 380px; height: 380px;
       background: var(--accent);
-      opacity: 0.14;
-      top: -150px; right: -100px;
-      animation: orbFloat1 9s ease-in-out infinite;
+      opacity: 0.45;
+      top: 0; left: 0;
+      filter: blur(55px);
+      z-index: 0;
+      will-change: transform;
     }
 
     .hero-orb-2 {
@@ -1134,12 +1162,6 @@
       opacity: 0.08;
       bottom: 8%; right: 18%;
       animation: orbFloat3 10s ease-in-out infinite;
-    }
-
-    @keyframes orbFloat1 {
-      0%, 100% { transform: translate(0, 0) scale(1); }
-      33%       { transform: translate(-30px, 35px) scale(1.04); }
-      66%       { transform: translate(22px, -22px) scale(0.97); }
     }
 
     @keyframes orbFloat2 {
@@ -1301,8 +1323,9 @@
   <!-- =========================================================
        HERO
   ========================================================= -->
+  <div class="hero-orb hero-orb-1"></div>
+
   <section id="hero">
-    <div class="hero-orb hero-orb-1"></div>
     <div class="hero-orb hero-orb-2"></div>
     <div class="hero-orb hero-orb-3"></div>
     <div class="container">
@@ -1318,45 +1341,48 @@
           <span id="typewriter-text"></span><span class="cursor"></span>
         </div>
 
-        <p class="hero-desc">
-          Building high-impact Android apps with Kotlin, Jetpack Compose, and Clean Architecture.
-          Obsessed with code quality, scalability, and modern mobile patterns.
-        </p>
-
-        <div class="hero-actions">
-          <a href="#contact" class="btn btn-primary">Get in touch</a>
-          <a href="#experience" class="btn btn-outline">See my work ↓</a>
-        </div>
-
-        <div class="hero-stats">
-          <div class="stat-item">
-            <div class="stat-number"><span class="count" data-target="3">0</span><span>+</span></div>
-            <div class="stat-label">Years experience</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-number"><span class="count" data-target="3">0</span><span>+</span></div>
-            <div class="stat-label">Projects shipped</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-number"><span class="count" data-target="10">0</span><span>+</span></div>
-            <div class="stat-label">Technologies</div>
-          </div>
-        </div>
-
-        <div class="hero-pills">
-          <span class="pill">Kotlin</span>
-          <span class="pill">Jetpack Compose</span>
-          <span class="pill">Clean Architecture</span>
-          <span class="pill">KMP</span>
-          <span class="pill">MVI</span>
-          <span class="pill">Hilt</span>
-          <span class="pill">Ktor</span>
-          <span class="pill">Supabase</span>
-        </div>
-
       </div>
     </div>
   </section>
+
+  <!-- Hero detail card -->
+  <div class="page-card">
+    <p class="hero-desc">
+      Building high-impact Android apps with Kotlin, Jetpack Compose, and Clean Architecture.
+      Obsessed with code quality, scalability, and modern mobile patterns.
+    </p>
+
+    <div class="hero-actions">
+      <a href="#contact" class="btn btn-primary">Get in touch</a>
+      <a href="#experience" class="btn btn-outline">See my work ↓</a>
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-number"><span class="count" data-target="3">0</span><span>+</span></div>
+        <div class="stat-label">Years experience</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number"><span class="count" data-target="3">0</span><span>+</span></div>
+        <div class="stat-label">Projects shipped</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number"><span class="count" data-target="10">0</span><span>+</span></div>
+        <div class="stat-label">Technologies</div>
+      </div>
+    </div>
+
+    <div class="hero-pills">
+      <span class="pill">Kotlin</span>
+      <span class="pill">Jetpack Compose</span>
+      <span class="pill">Clean Architecture</span>
+      <span class="pill">KMP</span>
+      <span class="pill">MVI</span>
+      <span class="pill">Hilt</span>
+      <span class="pill">Ktor</span>
+      <span class="pill">Supabase</span>
+    </div>
+  </div>
 
   <!-- =========================================================
        ABOUT — 01
@@ -2040,6 +2066,35 @@
         btn.disabled = false;
       }
     }
+
+    /* =========================================================
+       MOUSE-FOLLOWING ORB (hero-orb-1)
+    ========================================================= */
+    (function () {
+      const orb = document.querySelector('.hero-orb-1');
+      if (!orb) return;
+
+      // Initial position: top-right of viewport
+      let targetX = window.innerWidth - 280;
+      let targetY = -60;
+      let posX = targetX;
+      let posY = targetY;
+
+      orb.style.transform = `translate(${posX}px, ${posY}px)`;
+
+      document.addEventListener('mousemove', (e) => {
+        // position: fixed → coordinates are relative to the viewport directly
+        targetX = e.clientX - 190;
+        targetY = e.clientY - 190;
+      });
+
+      (function raf() {
+        posX += (targetX - posX) * 0.06;
+        posY += (targetY - posY) * 0.06;
+        orb.style.transform = `translate(${posX}px, ${posY}px)`;
+        requestAnimationFrame(raf);
+      })();
+    })();
   </script>
 
 </body>
