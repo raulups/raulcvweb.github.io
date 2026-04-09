@@ -321,10 +321,14 @@
       font-family: var(--font-display);
       font-weight: 200;
       font-size: clamp(1.4rem, 3vw, 2rem);
+      line-height: 1;
       color: var(--text-2);
       margin-bottom: 1.75rem;
-      min-height: 2.5rem;
+      height: 2.8rem;
+      overflow: hidden;
       letter-spacing: -0.01em;
+      display: flex;
+      align-items: center;
     }
 
     .cursor {
@@ -334,6 +338,7 @@
       background: var(--accent-text);
       margin-left: 2px;
       vertical-align: middle;
+      flex-shrink: 0;
       animation: blink 1s step-end infinite;
     }
 
@@ -683,47 +688,118 @@
     }
 
     .project-card {
-      background: var(--bg);
-      border: 1px solid var(--border);
+      border: 1px solid #2a2a2a;
       border-radius: var(--radius);
-      padding: 1.25rem 1.5rem;
+      overflow: hidden;
       transition: border-color var(--transition), box-shadow var(--transition);
     }
 
     .project-card:hover {
-      border-color: var(--border-2);
-      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+      border-color: #444;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.18);
+    }
+
+    .project-card-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.85rem 1.1rem;
+      background: #1a1a1a;
+      border-bottom: 1px solid #2a2a2a;
+    }
+
+    .project-app-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 7px;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .project-app-icon-fallback {
+      width: 32px;
+      height: 32px;
+      border-radius: 7px;
+      background: #2a2a2a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
     }
 
     .project-name {
-      font-family: var(--font-display);
-      font-weight: 400;
-      font-size: 0.95rem;
-      color: var(--text-1);
-      margin-bottom: 0.75rem;
-    }
-
-    .tech-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-    }
-
-    .tag {
       font-family: var(--font-mono);
-      font-size: 0.68rem;
-      letter-spacing: 0.04em;
-      padding: 0.2rem 0.6rem;
-      background: transparent;
-      border: 1px solid var(--border);
-      border-radius: 3px;
-      color: var(--text-3);
-      transition: all var(--transition);
+      font-weight: 400;
+      font-size: 0.82rem;
+      color: #e0e0e0;
+      letter-spacing: 0.02em;
     }
 
-    .tag:hover {
-      border-color: var(--accent-text);
+    .stack-table {
+      display: flex;
+      flex-direction: column;
+      padding: 0.25rem 0;
+    }
+
+    .stack-section-label {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
       color: var(--accent-text);
+      padding: 0.9rem 1.25rem 0.4rem;
+      opacity: 0.7;
+    }
+
+    .stack-row {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      padding: 0.45rem 1.25rem;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+      transition: background var(--transition);
+    }
+
+    .stack-row:last-child { border-bottom: none; }
+
+    .stack-row:hover { background: rgba(0,0,0,0.02); }
+
+    .stack-key {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--text-3);
+      min-width: 100px;
+      flex-shrink: 0;
+      letter-spacing: 0.02em;
+    }
+
+    .stack-val {
+      font-size: 0.88rem;
+      font-weight: 400;
+      color: var(--text-1);
+      letter-spacing: 0.01em;
+    }
+
+    /* Hero profile photo */
+    .hero-photo {
+      position: fixed;
+      left: 0;
+      top: 0;
+      height: 100vh;
+      width: clamp(300px, 40vw, 540px);
+      object-fit: cover;
+      object-position: center top;
+      opacity: 0.18;
+      mask-image: linear-gradient(to right, transparent 0%, black 15%, black 55%, transparent 95%),
+                  linear-gradient(to bottom, transparent 0%, black 8%, black 80%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, black 15%, black 55%, transparent 95%),
+                          linear-gradient(to bottom, transparent 0%, black 8%, black 80%, transparent 100%);
+      mask-composite: intersect;
+      -webkit-mask-composite: source-in;
+      pointer-events: none;
+      z-index: 0;
+      filter: grayscale(30%);
     }
 
     /* =========================================================
@@ -1328,6 +1404,7 @@
   <section id="hero">
     <div class="hero-orb hero-orb-2"></div>
     <div class="hero-orb hero-orb-3"></div>
+    <img src="images/profile-pic.png" alt="" class="hero-photo" aria-hidden="true">
     <div class="container">
       <div class="hero-content">
 
@@ -1495,38 +1572,37 @@
           <div class="project-cards">
 
             <div class="project-card">
-              <div class="project-name">Obramat</div>
-              <div class="tech-tags">
-                <span class="tag">Kotlin</span>
-                <span class="tag">MVI</span>
-                <span class="tag">Clean Architecture</span>
-                <span class="tag">Flow</span>
-                <span class="tag">Unit Testing</span>
-                <span class="tag">Hilt</span>
-                <span class="tag">Retrofit</span>
-                <span class="tag">Firebase</span>
-                <span class="tag">Compose</span>
-                <span class="tag">SOLID</span>
-                <span class="tag">Git Flow</span>
-                <span class="tag">CI/CD</span>
-                <span class="tag">Modular</span>
+              <div class="project-card-header">
+                <img src="images/obramat-icon.png" alt="Obramat icon" class="project-app-icon"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                <div class="project-app-icon-fallback" style="display:none">🏗️</div>
+                <div class="project-name">Obramat</div>
+              </div>
+              <div class="stack-table">
+                <div class="stack-row"><span class="stack-key">language</span><span class="stack-val">Kotlin</span></div>
+                <div class="stack-row"><span class="stack-key">architecture</span><span class="stack-val">Clean Architecture · MVI · Modular</span></div>
+                <div class="stack-row"><span class="stack-key">ui</span><span class="stack-val">Jetpack Compose</span></div>
+                <div class="stack-row"><span class="stack-key">di</span><span class="stack-val">Hilt</span></div>
+                <div class="stack-row"><span class="stack-key">network</span><span class="stack-val">Retrofit · Flow</span></div>
+                <div class="stack-row"><span class="stack-key">testing</span><span class="stack-val">Unit Testing</span></div>
+                <div class="stack-row"><span class="stack-key">infra</span><span class="stack-val">Firebase · CI/CD · Git Flow</span></div>
               </div>
             </div>
 
             <div class="project-card">
-              <div class="project-name">DKV Quiero Cuidarme Mas</div>
-              <div class="tech-tags">
-                <span class="tag">Kotlin</span>
-                <span class="tag">MVVM</span>
-                <span class="tag">Clean Architecture</span>
-                <span class="tag">LiveData</span>
-                <span class="tag">Koin</span>
-                <span class="tag">Retrofit</span>
-                <span class="tag">Firebase</span>
-                <span class="tag">SDKs</span>
-                <span class="tag">Compose</span>
-                <span class="tag">Git Flow</span>
-                <span class="tag">Modular</span>
+              <div class="project-card-header">
+                <img src="images/dkv-icon.png" alt="DKV icon" class="project-app-icon"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                <div class="project-app-icon-fallback" style="display:none">💊</div>
+                <div class="project-name">DKV Quiero Cuidarme Más</div>
+              </div>
+              <div class="stack-table">
+                <div class="stack-row"><span class="stack-key">language</span><span class="stack-val">Kotlin</span></div>
+                <div class="stack-row"><span class="stack-key">architecture</span><span class="stack-val">Clean Architecture · MVVM · Modular</span></div>
+                <div class="stack-row"><span class="stack-key">ui</span><span class="stack-val">Jetpack Compose</span></div>
+                <div class="stack-row"><span class="stack-key">di</span><span class="stack-val">Koin</span></div>
+                <div class="stack-row"><span class="stack-key">network</span><span class="stack-val">Retrofit · LiveData</span></div>
+                <div class="stack-row"><span class="stack-key">infra</span><span class="stack-val">Firebase · SDKs · Git Flow</span></div>
               </div>
             </div>
 
@@ -1549,28 +1625,23 @@
           <div class="project-cards">
 
             <div class="project-card">
-              <div class="project-name">Android Stack</div>
-              <div class="tech-tags">
-                <span class="tag">KMP</span>
-                <span class="tag">Jetpack Compose</span>
-                <span class="tag">Ktor Client</span>
-                <span class="tag">Clean Architecture</span>
-                <span class="tag">MVI</span>
-                <span class="tag">Hilt</span>
-                <span class="tag">WebView</span>
-                <span class="tag">Google Maps SDK</span>
+              <div class="project-card-header">
+                <img src="images/emer-icon.png" alt="Emer icon" class="project-app-icon"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                <div class="project-app-icon-fallback" style="display:none">🛍️</div>
+                <div class="project-name">Emer</div>
               </div>
-            </div>
-
-            <div class="project-card">
-              <div class="project-name">Backend Stack</div>
-              <div class="tech-tags">
-                <span class="tag">Ktor Server</span>
-                <span class="tag">Supabase</span>
-                <span class="tag">PostgreSQL</span>
-                <span class="tag">Render</span>
-                <span class="tag">n8n</span>
-                <span class="tag">REST API</span>
+              <div class="stack-table">
+                <div class="stack-section-label">Android</div>
+                <div class="stack-row"><span class="stack-key">language</span><span class="stack-val">Kotlin · KMP</span></div>
+                <div class="stack-row"><span class="stack-key">architecture</span><span class="stack-val">Clean Architecture · MVI</span></div>
+                <div class="stack-row"><span class="stack-key">ui</span><span class="stack-val">Jetpack Compose</span></div>
+                <div class="stack-row"><span class="stack-key">network</span><span class="stack-val">Ktor Client</span></div>
+                <div class="stack-row"><span class="stack-key">extras</span><span class="stack-val">Hilt · WebView · Google Maps SDK</span></div>
+                <div class="stack-section-label">Backend</div>
+                <div class="stack-row"><span class="stack-key">server</span><span class="stack-val">Ktor Server</span></div>
+                <div class="stack-row"><span class="stack-key">database</span><span class="stack-val">Supabase · PostgreSQL</span></div>
+                <div class="stack-row"><span class="stack-key">deploy</span><span class="stack-val">Render · n8n · REST API</span></div>
               </div>
             </div>
 
@@ -1691,20 +1762,13 @@
 
         <div class="edu-card reveal reveal-delay-1">
           <div class="edu-num">01 / education</div>
-          <div class="edu-icon">🎓</div>
-          <div class="edu-degree">Baccalaureate Degree</div>
-          <div class="edu-school">IES Francisco de Goya</div>
-        </div>
-
-        <div class="edu-card reveal reveal-delay-2">
-          <div class="edu-num">02 / education</div>
           <div class="edu-icon">💻</div>
           <div class="edu-degree">Superior Degree — Application Developer Multiplatform</div>
           <div class="edu-school">IFP Innovación en Formación Profesional</div>
         </div>
 
-        <div class="edu-card reveal reveal-delay-3">
-          <div class="edu-num">03 / education</div>
+        <div class="edu-card reveal reveal-delay-2">
+          <div class="edu-num">02 / education</div>
           <div class="edu-icon">⚡</div>
           <div class="edu-degree">Compose Expert Course</div>
           <div class="edu-school">Antonio Leiva</div>
@@ -2019,7 +2083,7 @@
         const x    = (e.clientX - rect.left) / rect.width  - 0.5;
         const y    = (e.clientY - rect.top)  / rect.height - 0.5;
         card.style.transition = 'transform 0s';
-        card.style.transform  = `perspective(700px) rotateX(${-y * 7}deg) rotateY(${x * 7}deg) translateY(-3px)`;
+        card.style.transform  = `perspective(1200px) rotateX(${-y * 3}deg) rotateY(${x * 3}deg) translateY(-2px)`;
       });
       card.addEventListener('mouseleave', () => {
         card.style.transition = 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), border-color var(--transition), box-shadow var(--transition)';
